@@ -4,10 +4,11 @@ import { CORE_CONCEPTS } from "./data";
 import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept/CoreConcept.jsx";
 import TabButton from "./components/TabButton.jsx";
+import { EXAMPLES } from "./data.js";
 
 function App() {
   // let tabcontent = "Please click a button";
-  const [selectedTopic, setSeclectedTopic ] = useState("Pleas click a button");
+  const [selectedTopic, setSeclectedTopic] = useState("");
 
   function clickHandler(selectButton) {
     // selectButton => 'components', 'jsx', 'props', 'state'
@@ -16,6 +17,20 @@ function App() {
   }
 
   console.log("APP COMPONENT EXECUTING");
+
+  let tabContent = <p>Please select a topic.</p>;
+
+  if (selectedTopic) {
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -37,14 +52,14 @@ function App() {
         <section id="examples">
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={() => clickHandler("component")}>
-              Compoennts
+            <TabButton onSelect={() => clickHandler("components")}>
+              Components
             </TabButton>
             <TabButton onSelect={() => clickHandler("jsx")}>JSX</TabButton>
             <TabButton onSelect={() => clickHandler("props")}>Props</TabButton>
             <TabButton onSelect={() => clickHandler("state")}>State</TabButton>
           </menu>
-          {selectedTopic}
+          {tabContent}
         </section>
       </main>
     </div>
